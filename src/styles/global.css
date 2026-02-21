@@ -4,18 +4,104 @@
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-primary: hsl(var(--primary));
+  --color-secondary: hsl(var(--secondary));
+  --color-accent-teal: hsl(var(--accent-teal));
+  --color-accent-crimson: hsl(var(--accent-crimson));
 }
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    /*
+      AUTHENTIC DARK MODE
+      Background: Deep off-black to let the yellow/red of the sketch avatar pop.
+      Primary: Strong, vibrant "Sketch Yellow" (#fce883)
+      Secondary: The "Pencil Red" from the avatar (#e63946)
+    */
+    --background: 0 0% 6%; /* #0f0f0f Deep Black/Charcoal */
+    --foreground: 45 60% 90%; /* Warm off-white for text */
+
+    --primary: 49 95% 75%; /* The bright yellow from the sketch background */
+    --primary-foreground: 0 0% 10%; /* Dark text on Yellow */
+
+    --secondary: 355 78% 56%; /* The Red from the pencil in the sketch */
+    --secondary-foreground: 0 0% 100%; /* White text on Red */
+
+    --accent: 49 95% 75%;
+    --accent-foreground: 0 0% 10%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 49 95% 75%;
+
+    --radius: 0.25rem;
+  }
+  .dark {
+    /* High-contrast Dark Print Mode */
+    --background: 220 15% 10%; /* Inky dark navy/black */
+    --foreground: 45 30% 93%; /* Warm paper text */
+    --primary: 45 100% 50%; /* Piercing Kodak Yellow */
+    --secondary: 220 15% 15%; /* Slightly lighter navy */
+    --accent-teal: 180 50% 50%; /* Cyan pop */
+    --accent-crimson: 0 80% 60%; /* Bright red pop */
   }
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  /* Aggressive typography base */
+  font-family: "Impact", "Arial Black", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Halftone dot pattern overlay for that retro editorial print feel */
+.halftone-overlay {
+  background-image: radial-gradient(var(--color-foreground) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.15;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.dark .halftone-overlay {
+  mix-blend-mode: screen;
+  opacity: 0.1;
+}
+
+/* Vox Highlighter Effect */
+.vox-highlight {
+  display: inline;
+  background-color: var(--color-primary);
+  color: #000 !important; /* Always black text on highlighter */
+  padding: 0 0.1em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Fluid, organic typography for sketchbook contrast */
+.font-sketch {
+  font-family: "Georgia", "Playfair Display", serif;
+  font-style: italic;
+  font-weight: normal;
+  letter-spacing: normal;
+}
+
+/* Lenis smooth scrolling requires this */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }

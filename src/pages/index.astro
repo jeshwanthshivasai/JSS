@@ -1,17 +1,26 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import HeroScene from '../components/3D/HeroScene.tsx';
+import EngineProjects from '../components/Engine/Projects.tsx';
+import SplitView from '../components/SplitView.tsx';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Jeshwanth - Product Designer & UI Engineer">
+	<main class="w-full relative z-10">
+		<HeroScene client:load />
+
+		<div id="engine">
+			<EngineProjects client:visible />
+		</div>
+
+		<div id="sketchbook">
+			{/* The Sketchbook section is embedded directly inside the SplitView's right panel */}
+			<SplitView client:visible />
+		</div>
+
+		<div id="contact">
+			<Footer />
+		</div>
+	</main>
+</Layout>

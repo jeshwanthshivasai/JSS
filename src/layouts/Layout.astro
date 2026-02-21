@@ -1,0 +1,30 @@
+---
+import SEO from '../components/SEO.astro';
+import WebGLBackground from '../components/3D/WebGLBackground.tsx';
+import Header from '../components/Header.astro';
+import CustomCursor from '../components/CustomCursor.tsx';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<SEO title={title} description={description} />
+	</head>
+	<body class="bg-background text-foreground antialiased selection:bg-primary selection:text-foreground">
+		<WebGLBackground client:load />
+		<CustomCursor client:load />
+		<Header />
+		
+		<div class="relative z-10 w-full min-h-screen">
+			<slot />
+		</div>
+	</body>
+</html>

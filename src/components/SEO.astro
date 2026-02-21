@@ -1,0 +1,47 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	canonicalURL?: string | URL;
+}
+
+const {
+	title = 'Jeshwanth Shiva Sai | UI Engineer & Sonic Storyteller',
+	description = 'High-level Product Designer, Frontend Engineer, and Creative exploring the intersection between UI/UX, SaaS, and organic arts. Google Local Guide Level 7.',
+	image = '/og-image.jpg', // Placeholder, you should put a real image in public/og-image.jpg
+	canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://jeshwanth.com'),
+} = Astro.props;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/avatar.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content="Jeshwanth Shiva Sai" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Theme Color for browsers -->
+<meta name="theme-color" content="#F2EFE9" />

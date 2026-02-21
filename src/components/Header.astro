@@ -1,0 +1,15 @@
+---
+// Header.astro
+// Global navigation allowing quick jumps to specific sections.
+---
+<header class="fixed top-0 left-0 w-full z-50 p-6 mix-blend-difference text-white flex justify-between items-center pointer-events-none">
+  <div class="font-black text-2xl tracking-tighter uppercase uppercase pointer-events-auto cursor-pointer" data-cursor-text="HOME">
+    <a href="#hero">JSS.</a>
+  </div>
+  
+  <nav class="hidden md:flex gap-8 font-bold text-xs tracking-[0.2em] uppercase pointer-events-auto">
+    <a href="#engine" class="hover:text-primary transition-colors duration-300" data-cursor>Work</a>
+    <a href="#sketchbook" class="hover:text-primary transition-colors duration-300" data-cursor>Playground</a>
+    <a href="#contact" class="hover:text-primary transition-colors duration-300" data-cursor>Contact</a>
+  </nav>
+</header>

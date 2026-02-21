@@ -1,0 +1,43 @@
+---
+// Footer Component containing social links
+const socials = [
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/jeshwanthshivasai' },
+  { name: 'YouTube', url: 'https://youtube.com/' },
+  { name: 'X (Twitter)', url: 'https://twitter.com/' },
+  { name: 'StackBlitz', url: 'https://stackblitz.com/' },
+  { name: 'Instagram', url: 'https://instagram.com/' },
+];
+
+import Magnetic from './Magnetic.tsx';
+---
+<footer class="relative z-10 w-full max-w-7xl mx-auto px-4 py-32 mt-32 text-center flex flex-col items-center">
+  <h2 class="text-3xl md:text-5xl font-serif text-primary mb-6">Let's build something.</h2>
+  
+  {/* The Mini Sequencer Placeholder */}
+  <div class="flex gap-2 mb-16 opacity-70 hover:opacity-100 transition-opacity">
+    <button class="w-12 h-16 border border-secondary bg-background hover:bg-primary transition-colors hover:text-background rounded" aria-label="Play Note 1">C</button>
+    <button class="w-12 h-16 border border-secondary bg-background hover:bg-accent-teal transition-colors hover:text-background rounded" aria-label="Play Note 2">E</button>
+    <button class="w-12 h-16 border border-secondary bg-background hover:bg-accent-crimson transition-colors hover:text-background rounded" aria-label="Play Note 3">G</button>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-12">
+    {socials.map(social => (
+      <Magnetic client:load>
+        <a 
+          href={social.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-lg font-sans text-foreground/80 hover:text-primary transition-colors duration-300 relative group"
+          data-cursor-text={social.name.toUpperCase()}
+        >
+          {social.name}
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+      </Magnetic>
+    ))}
+  </div>
+
+  <p class="text-xs text-foreground/40 font-mono uppercase tracking-widest mt-16">
+    Designed and Engineered by Jeshwanth Shiva Sai © 2026
+  </p>
+</footer>
