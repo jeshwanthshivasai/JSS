@@ -49,30 +49,20 @@
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
-  /* Aggressive typography base */
-  font-family: "Impact", "Arial Black", "Helvetica Neue", sans-serif;
+  /* Clean, minimalist typography base */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Halftone dot pattern overlay for that retro editorial print feel */
-.halftone-overlay {
-  background-image: radial-gradient(var(--color-foreground) 1px, transparent 1px);
-  background-size: 4px 4px;
-  opacity: 0.15;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-.dark .halftone-overlay {
-  mix-blend-mode: screen;
-  opacity: 0.1;
-}
-
-/* Vox Highlighter Effect */
+/* Vox Highlighter Effect - Cleaned up */
 .vox-highlight {
   display: inline;
   background-color: var(--color-primary);
   color: #000 !important; /* Always black text on highlighter */
-  padding: 0 0.1em;
+  padding: 0 0.2em;
+  border-radius: 2px;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }

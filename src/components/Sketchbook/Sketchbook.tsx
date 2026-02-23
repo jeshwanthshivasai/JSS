@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { RoughBox } from './RoughBox';
 import SketchedAvatar from './SketchedAvatar';
 import { playSketchbookHover } from '../../lib/audio';
 
@@ -51,41 +50,41 @@ export default function Sketchbook() {
 
                 {/* Google Local Guide - Big Featured Block */}
                 <motion.div variants={itemVariants} className="w-full group" onMouseEnter={playSketchbookHover}>
-                    <RoughBox strokeColor="#fbc31b" fillColor="#fbc31b" className="h-[400px] cursor-pointer">
-                        <h4 className="text-5xl font-black uppercase text-background">Level 7 Local Guide</h4>
-                        <p className="mt-4 text-background font-bold text-lg">Connecting local businesses and highlighting architectural nuances across India.</p>
-                        <div className="mt-8 w-full h-48 bg-background border-4 border-foreground flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-700 mix-blend-multiply">
-                            <span className="font-bold uppercase tracking-widest text-foreground">Map Imagery Placeholder</span>
+                    <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] p-10 md:p-14 hover:bg-[#111] transition-colors duration-500 h-full flex flex-col cursor-pointer shadow-2xl">
+                        <h4 className="text-4xl md:text-5xl font-black uppercase text-foreground">Level 7 Local Guide</h4>
+                        <p className="mt-4 text-foreground/80 font-bold text-lg max-w-2xl">Connecting local businesses and highlighting architectural nuances across India.</p>
+                        <div className="mt-10 w-full h-56 bg-[#1a1a1a] rounded-xl border border-white/5 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-700">
+                            <span className="font-bold uppercase tracking-widest text-foreground/30">Map Imagery Placeholder</span>
                         </div>
-                    </RoughBox>
+                    </div>
                 </motion.div>
 
                 {/* Gaming Stats */}
-                <motion.div variants={itemVariants} className="w-full flex flex-col gap-4">
-                    <RoughBox strokeColor="#000" fillColor="#fff" className="" onMouseEnter={playSketchbookHover}>
-                        <div className="flex justify-between items-center px-4">
+                <motion.div variants={itemVariants} className="w-full flex flex-col gap-6">
+                    <div className="rounded-3xl border border-white/10 bg-[#0a0a0a] p-8 md:p-10 hover:bg-[#111] transition-colors duration-500 shadow-xl cursor-pointer" onMouseEnter={playSketchbookHover}>
+                        <div className="flex justify-between items-center sm:px-4">
                             <div>
-                                <h4 className="text-3xl font-black uppercase">Epic Games</h4>
-                                <p className="font-bold text-accent-crimson uppercase tracking-wider mt-1">AAA Explorer</p>
+                                <h4 className="text-2xl md:text-3xl font-black uppercase text-foreground">Epic Games</h4>
+                                <p className="font-bold text-foreground/50 uppercase tracking-widest mt-2 text-sm">AAA Explorer</p>
                             </div>
                             <div className="text-right">
-                                <span className="text-5xl font-black text-foreground">2.4k</span>
-                                <span className="font-bold text-foreground block uppercase">Hours</span>
+                                <span className="text-4xl md:text-5xl font-black text-foreground">2.4k</span>
+                                <span className="font-bold text-foreground/50 block uppercase text-sm mt-1 tracking-widest">Hours</span>
                             </div>
                         </div>
-                    </RoughBox>
-                    <RoughBox strokeColor="#000" fillColor="#fff" className="" onMouseEnter={playSketchbookHover}>
-                        <div className="flex justify-between items-center px-4">
+                    </div>
+                    <div className="rounded-3xl border border-white/10 bg-[#0a0a0a] p-8 md:p-10 hover:bg-[#111] transition-colors duration-500 shadow-xl cursor-pointer" onMouseEnter={playSketchbookHover}>
+                        <div className="flex justify-between items-center sm:px-4">
                             <div>
-                                <h4 className="text-3xl font-black uppercase">Steam</h4>
-                                <p className="font-bold text-accent-teal uppercase tracking-wider mt-1">Library Architect</p>
+                                <h4 className="text-2xl md:text-3xl font-black uppercase text-foreground">Steam</h4>
+                                <p className="font-bold text-foreground/50 uppercase tracking-widest mt-2 text-sm">Library Architect</p>
                             </div>
                             <div className="text-right">
-                                <span className="text-5xl font-black text-foreground">180+</span>
-                                <span className="font-bold text-foreground block uppercase">Titles</span>
+                                <span className="text-4xl md:text-5xl font-black text-foreground">180+</span>
+                                <span className="font-bold text-foreground/50 block uppercase text-sm mt-1 tracking-widest">Titles</span>
                             </div>
                         </div>
-                    </RoughBox>
+                    </div>
                 </motion.div>
 
             </motion.div>
