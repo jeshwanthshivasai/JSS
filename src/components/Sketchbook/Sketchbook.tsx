@@ -59,33 +59,6 @@ export default function Sketchbook() {
                     </div>
                 </motion.div>
 
-                {/* Gaming Stats */}
-                <motion.div variants={itemVariants} className="w-full flex flex-col gap-6">
-                    <div className="rounded-3xl border border-white/10 bg-[#0a0a0a] p-8 md:p-10 hover:bg-[#111] transition-colors duration-500 shadow-xl cursor-pointer" onMouseEnter={playSketchbookHover}>
-                        <div className="flex justify-between items-center sm:px-4">
-                            <div>
-                                <h4 className="text-2xl md:text-3xl font-black uppercase text-foreground">Epic Games</h4>
-                                <p className="font-bold text-foreground/50 uppercase tracking-widest mt-2 text-sm">AAA Explorer</p>
-                            </div>
-                            <div className="text-right">
-                                <span className="text-4xl md:text-5xl font-black text-foreground">2.4k</span>
-                                <span className="font-bold text-foreground/50 block uppercase text-sm mt-1 tracking-widest">Hours</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="rounded-3xl border border-white/10 bg-[#0a0a0a] p-8 md:p-10 hover:bg-[#111] transition-colors duration-500 shadow-xl cursor-pointer" onMouseEnter={playSketchbookHover}>
-                        <div className="flex justify-between items-center sm:px-4">
-                            <div>
-                                <h4 className="text-2xl md:text-3xl font-black uppercase text-foreground">Steam</h4>
-                                <p className="font-bold text-foreground/50 uppercase tracking-widest mt-2 text-sm">Library Architect</p>
-                            </div>
-                            <div className="text-right">
-                                <span className="text-4xl md:text-5xl font-black text-foreground">180+</span>
-                                <span className="font-bold text-foreground/50 block uppercase text-sm mt-1 tracking-widest">Titles</span>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
 
             </motion.div>
         </section>

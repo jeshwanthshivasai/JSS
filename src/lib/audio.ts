@@ -134,6 +134,28 @@ class AwwwardsSynthesizer {
     }
 }
 
+    // Play a specific frequency (C4, E4, G4, etc.)
+    playFrequency(freq: number) {
+        if (!this.isUnlocked || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, t);
+
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.15, t + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(t);
+        osc.stop(t + 0.5);
+    }
+}
+
 const synth = new AwwwardsSynthesizer();
 
 export const unlockAudio = () => synth.unlock();
@@ -141,3 +163,4 @@ export const playHoverTick = () => synth.playHoverTick();
 export const playClickSnap = () => synth.playClickSnap();
 export const playEngineHover = () => synth.playEngineHover();
 export const playSketchbookHover = () => synth.playSketchbookHover();
+export const playNote = (freq: number) => synth.playFrequency(freq);
