@@ -142,7 +142,7 @@ function AkaiMPKMini({ position }: { position: [number, number, number] }) {
 
     return (
         <Float speed={1.5} rotationIntensity={1} floatIntensity={1.5} position={position}>
-            <group rotation={[-Math.PI / 6, -Math.PI / 4, Math.PI / 12]}>
+            <group rotation={[-Math.PI / 4, -Math.PI / 8, 0]}>
                 {/* Main Chassis (Signature Akai Black/Red) */}
                 <mesh position={[0, -0.1, 0]}>
                     <boxGeometry args={[chassisWidth, chassisHeight, chassisDepth]} />
@@ -184,7 +184,7 @@ function AkaiMPKMini({ position }: { position: [number, number, number] }) {
                 </group>
 
                 {/* 8 MPC Pads (Backlit Red) */}
-                <group position={[-0.7, 0.15, -0.3]}>
+                <group position={[-0.8, 0.15, -0.45]}>
                     {Array.from({ length: 8 }).map((_, i) => {
                         const row = Math.floor(i / 4);
                         const col = i % 4;
@@ -231,7 +231,7 @@ function AkaiMPKMini({ position }: { position: [number, number, number] }) {
                 </group>
 
                 {/* --- 25 Velocity Sensitive Keys --- */}
-                <group position={[0, 0.05, 0.45]}>
+                <group position={[0, 0.05, 0.5]}>
                     {/* White Keys */}
                     {Array.from({ length: 15 }).map((_, i) => (
                         <mesh 

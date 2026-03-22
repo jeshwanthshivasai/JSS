@@ -19,12 +19,12 @@ export default function Sketchbook() {
     return (
         <section className="relative z-10 w-full mb-32">
             <div className="mb-12">
-                <h2 className="text-sm tracking-[0.2em] text-accent-teal uppercase mb-2 font-bold">Phase 02</h2>
-                <h3 className="text-5xl font-black tracking-tighter text-foreground uppercase">
-                    The Sketchbook
+                <h2 className="text-sm tracking-[0.4em] text-accent-teal/50 uppercase mb-2 font-mono font-bold">/02</h2>
+                <h3 className="text-5xl md:text-6xl font-black tracking-tighter text-foreground uppercase border-l-4 border-accent-teal pl-6 py-2">
+                    About & Sketchbook
                 </h3>
-                <p className="mt-4 text-accent-teal text-xl font-sketch">
-                    Organic passions, analog mediums, and unfiltered creativity.
+                <p className="mt-6 text-foreground/50 text-xl font-medium max-w-2xl leading-relaxed">
+                    The architectural foundation and analog roots of my creative process.
                 </p>
             </div>
 
