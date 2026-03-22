@@ -132,10 +132,9 @@ class AwwwardsSynthesizer {
         osc.start(t);
         osc.stop(t + 0.15);
     }
-}
 
-    // Play a specific frequency (C4, E4, G4, etc.)
-    playFrequency(freq: number) {
+    // High-fidelity sine note for the CEG Sequencer
+    playNote(freq: number) {
         if (!this.isUnlocked || !this.ctx) return;
         const t = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
@@ -154,7 +153,106 @@ class AwwwardsSynthesizer {
         osc.start(t);
         osc.stop(t + 0.5);
     }
+
+    // --- AKAI MPK MINI AUDIO ENGINE ---
+
+    // 8 Specialized Drum Sounds for the MPC Pads
+    playDrumPad(index: number) {
+        if (!this.isUnlocked || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        const gain = this.ctx.createGain();
+        gain.connect(this.ctx.destination);
+
+        switch(index) {
+            case 0: // Deep Sub Kick
+            case 4:
+                const kick = this.ctx.createOscillator();
+                kick.frequency.setValueAtTime(150, t);
+                kick.frequency.exponentialRampToValueAtTime(0.01, t + 0.5);
+                gain.gain.setValueAtTime(0.4, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.5);
+                kick.connect(gain);
+                kick.start(t);
+                kick.stop(t + 0.5);
+                break;
+            case 1: // Snare Snap
+            case 5:
+                const snare = this.ctx.createOscillator();
+                snare.type = 'triangle';
+                snare.frequency.setValueAtTime(220, t);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+                snare.connect(gain);
+                snare.start(t);
+                snare.stop(t + 0.1);
+                // Add noise for texture
+                const noise = this.ctx.createBufferSource();
+                const buf = this.ctx.createBuffer(1, this.ctx.sampleRate * 0.1, this.ctx.sampleRate);
+                const data = buf.getChannelData(0);
+                for(let i=0; i<data.length; i++) data[i] = Math.random() * 2 - 1;
+                noise.buffer = buf;
+                const noiseGain = this.ctx.createGain();
+                noiseGain.gain.setValueAtTime(0.1, t);
+                noiseGain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+                noise.connect(noiseGain);
+                noiseGain.connect(this.ctx.destination);
+                noise.start(t);
+                break;
+            case 2: // Hi-Hat Click
+            case 6:
+                const hat = this.ctx.createOscillator();
+                hat.type = 'square';
+                hat.frequency.setValueAtTime(12000, t);
+                gain.gain.setValueAtTime(0.05, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+                hat.connect(gain);
+                hat.start(t);
+                hat.stop(t + 0.05);
+                break;
+            default: // Percussion/Wood
+                const wood = this.ctx.createOscillator();
+                wood.type = 'sine';
+                wood.frequency.setValueAtTime(600 + (index * 100), t);
+                gain.gain.setValueAtTime(0.1, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+                wood.connect(gain);
+                wood.start(t);
+                wood.stop(t + 0.1);
+        }
+    }
+
+    // 25 Semi-weighted Key Interactivity
+    playMidiKey(index: number) {
+        if (!this.isUnlocked || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        // C3 to C5 range (roughly)
+        const baseFreq = 261.63; // C4
+        const ratio = Math.pow(2, (index - 12) / 12); // Shift C4 center
+        
+        osc.frequency.setValueAtTime(baseFreq * ratio, t);
+        osc.type = 'sawtooth';
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2000, t);
+        filter.frequency.exponentialRampToValueAtTime(200, t + 0.4);
+
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(t);
+        osc.stop(t + 0.6);
+    }
 }
+
 
 const synth = new AwwwardsSynthesizer();
 
@@ -163,4 +261,6 @@ export const playHoverTick = () => synth.playHoverTick();
 export const playClickSnap = () => synth.playClickSnap();
 export const playEngineHover = () => synth.playEngineHover();
 export const playSketchbookHover = () => synth.playSketchbookHover();
-export const playNote = (freq: number) => synth.playFrequency(freq);
+export const playNote = (freq: number) => synth.playNote(freq);
+export const playDrumPad = (i: number) => synth.playDrumPad(i);
+export const playMidiKey = (i: number) => synth.playMidiKey(i);

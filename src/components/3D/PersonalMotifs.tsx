@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, Environment } from '@react-three/drei';
+import { Float, Environment, Text } from '@react-three/drei';
 import * as THREE from 'three';
+import { playMidiKey, playDrumPad } from '../../lib/audio';
 
 // --- HIGH FIDELITY 3D MOTIFS ---
 // Built entirely using advanced R3F groupings and primitives for an Awwwards-level look
@@ -131,79 +132,144 @@ function PS5Controller({ position }: { position: [number, number, number] }) {
     );
 }
 
-function MidiKeyboard({ position }: { position: [number, number, number] }) {
-    // A 25-key synth style layout
-    const numKeys = 14;
-    const keyWidth = 0.18;
-    const keyboardWidth = numKeys * keyWidth;
+function AkaiMPKMini({ position }: { position: [number, number, number] }) {
+    const numWhiteKeys = 15;
+    const numBlackKeys = 10;
+    const keyWidth = 0.14;
+    const chassisWidth = 3.2;
+    const chassisHeight = 0.4;
+    const chassisDepth = 1.8;
 
     return (
         <Float speed={1.5} rotationIntensity={1} floatIntensity={1.5} position={position}>
             <group rotation={[-Math.PI / 6, -Math.PI / 4, Math.PI / 12]}>
-                {/* Main Base Chassis */}
-                <mesh position={[0, 0, 0]}>
-                    <boxGeometry args={[keyboardWidth + 1, 0.3, 1.2]} />
-                    <meshStandardMaterial color="#1a1a1a" roughness={0.8} metalness={0.3} />
+                {/* Main Chassis (Signature Akai Black/Red) */}
+                <mesh position={[0, -0.1, 0]}>
+                    <boxGeometry args={[chassisWidth, chassisHeight, chassisDepth]} />
+                    <meshStandardMaterial color="#111" roughness={0.3} metalness={0.2} />
                 </mesh>
 
-                {/* Pitch / Mod Wheels Panel (Left side) */}
-                <mesh position={[-keyboardWidth / 2 - 0.2, 0.1, 0.2]}>
-                    <boxGeometry args={[0.4, 0.2, 0.6]} />
-                    <meshStandardMaterial color="#222" />
+                {/* Left Side Red Accent Panel */}
+                <mesh position={[-chassisWidth/2 + 0.05, -0.05, 0]}>
+                    <boxGeometry args={[0.1, chassisHeight, chassisDepth - 0.1]} />
+                    <meshStandardMaterial color="#e63946" metalness={0.5} />
                 </mesh>
 
-                {/* Pitch Wheel */}
-                <mesh position={[-keyboardWidth / 2 - 0.3, 0.2, 0.2]} rotation={[0, 0, Math.PI / 2]}>
-                    <cylinderGeometry args={[0.2, 0.2, 0.08, 32]} />
-                    <meshStandardMaterial color="#e63946" /> {/* Red Wheel */}
-                </mesh>
-
-                {/* Mod Wheel */}
-                <mesh position={[-keyboardWidth / 2 - 0.1, 0.2, 0.2]} rotation={[0, 0, Math.PI / 2]}>
-                    <cylinderGeometry args={[0.2, 0.2, 0.08, 32]} />
-                    <meshStandardMaterial color="#333" />
-                </mesh>
-
-                {/* Control Panel (Top edge) */}
-                <mesh position={[0, 0.15, -0.4]}>
-                    <boxGeometry args={[keyboardWidth + 0.8, 0.2, 0.3]} />
-                    <meshStandardMaterial color="#111" />
-                </mesh>
-
-                {/* LED Screen */}
-                <mesh position={[-0.5, 0.26, -0.4]}>
-                    <boxGeometry args={[0.6, 0.02, 0.15]} />
-                    <meshBasicMaterial color="#fce883" /> {/* Glowing Yellow Display */}
-                </mesh>
-
-                {/* Knobs */}
-                {[0.2, 0.5, 0.8, 1.1].map((x, i) => (
-                    <mesh key={i} position={[x, 0.25, -0.4]}>
-                        <cylinderGeometry args={[0.06, 0.06, 0.1, 16]} />
-                        <meshStandardMaterial color="#e63946" />
+                {/* OLED Display Area */}
+                <group position={[0.2, 0.12, -0.4]}>
+                    <mesh>
+                        <boxGeometry args={[0.5, 0.02, 0.3]} />
+                        <meshStandardMaterial color="#000" roughness={0.1} />
                     </mesh>
-                ))}
+                    <Text
+                        position={[0, 0.02, 0]}
+                        rotation={[-Math.PI / 2, 0, 0]}
+                        fontSize={0.06}
+                        color="#00ffff" // Cyber Blue OLED glow
+                    >
+                        JESHWANTH
+                    </Text>
+                </group>
 
-                {/* White Keys */}
-                {Array.from({ length: numKeys }).map((_, i) => (
-                    <mesh key={`white-${i}`} position={[(i * keyWidth) - (keyboardWidth / 2) + (keyWidth / 2), 0.1, 0.2]}>
-                        <boxGeometry args={[keyWidth - 0.02, 0.2, 0.8]} />
-                        <meshStandardMaterial color="#ffffff" roughness={0.1} />
+                {/* 4-Way Joystick (Red) */}
+                <group position={[-chassisWidth/2 + 0.4, 0.15, -0.4]}>
+                    <mesh rotation={[Math.PI/2, 0, 0]}>
+                        <cylinderGeometry args={[0.12, 0.12, 0.05, 32]} />
+                        <meshStandardMaterial color="#222" />
                     </mesh>
-                ))}
+                    <mesh position={[0, 0.1, 0]}>
+                        <sphereGeometry args={[0.06, 16, 16]} />
+                        <meshStandardMaterial color="#e63946" emissive="#e63946" emissiveIntensity={0.5} />
+                    </mesh>
+                </group>
 
-                {/* Black Keys (Pattern: 2, 3, 2, 3...) */}
-                {Array.from({ length: numKeys - 1 }).map((_, i) => {
-                    // Standard piano black key repeating pattern logic
-                    const isBlack = [0, 1, 3, 4, 5].includes(i % 7);
-                    if (!isBlack) return null;
-                    return (
-                        <mesh key={`black-${i}`} position={[(i * keyWidth) - (keyboardWidth / 2) + keyWidth, 0.2, 0.05]}>
-                            <boxGeometry args={[keyWidth * 0.6, 0.2, 0.5]} />
-                            <meshStandardMaterial color="#000000" roughness={0.5} />
+                {/* 8 MPC Pads (Backlit Red) */}
+                <group position={[-0.7, 0.15, -0.3]}>
+                    {Array.from({ length: 8 }).map((_, i) => {
+                        const row = Math.floor(i / 4);
+                        const col = i % 4;
+                        return (
+                            <mesh 
+                                key={`pad-${i}`} 
+                                position={[col * 0.35, 0, row * 0.35]}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    playDrumPad(i);
+                                }}
+                                onPointerOver={(e) => (document.body.style.cursor = 'pointer')}
+                                onPointerOut={(e) => (document.body.style.cursor = 'auto')}
+                            >
+                                <boxGeometry args={[0.28, 0.05, 0.28]} />
+                                <meshStandardMaterial 
+                                    color="#222" 
+                                    emissive="#ff0000" 
+                                    emissiveIntensity={0.4} 
+                                    roughness={0.8}
+                                />
+                            </mesh>
+                        );
+                    })}
+                </group>
+
+                {/* 8 Control Knobs */}
+                <group position={[0.8, 0.15, -0.6]}>
+                    {Array.from({ length: 8 }).map((_, i) => {
+                        const row = Math.floor(i / 4);
+                        const col = i % 4;
+                        return (
+                            <mesh key={`knob-${i}`} position={[col * 0.25, 0, row * 0.3]}>
+                                <cylinderGeometry args={[0.08, 0.08, 0.15, 32]} />
+                                <meshStandardMaterial color="#333" roughness={0.4} metalness={0.6} />
+                                {/* Pointer on Knob */}
+                                <mesh position={[0, 0.08, 0.04]}>
+                                    <boxGeometry args={[0.01, 0.02, 0.04]} />
+                                    <meshStandardMaterial color="#fff" />
+                                </mesh>
+                            </mesh>
+                        );
+                    })}
+                </group>
+
+                {/* --- 25 Velocity Sensitive Keys --- */}
+                <group position={[0, 0.05, 0.45]}>
+                    {/* White Keys */}
+                    {Array.from({ length: 15 }).map((_, i) => (
+                        <mesh 
+                            key={`white-${i}`} 
+                            position={[(i * keyWidth) - (15 * keyWidth / 2) + keyWidth / 2, 0, 0]}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                playMidiKey(i);
+                            }}
+                            onPointerOver={() => (document.body.style.cursor = 'pointer')}
+                            onPointerOut={() => (document.body.style.cursor = 'auto')}
+                        >
+                            <boxGeometry args={[keyWidth - 0.01, 0.15, 0.8]} />
+                            <meshStandardMaterial color="#ffffff" roughness={0.1} />
                         </mesh>
-                    )
-                })}
+                    ))}
+
+                    {/* Black Keys */}
+                    {Array.from({ length: 14 }).map((_, i) => {
+                        const pattern = [0, 1, 3, 4, 5];
+                        if (!pattern.includes(i % 7)) return null;
+                        return (
+                            <mesh 
+                                key={`black-${i}`} 
+                                position={[(i * keyWidth) - (15 * keyWidth / 2) + keyWidth, 0.08, -0.2]}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    playMidiKey(i + 15); // Offset for black keys audio
+                                }}
+                                onPointerOver={() => (document.body.style.cursor = 'pointer')}
+                                onPointerOut={() => (document.body.style.cursor = 'auto')}
+                            >
+                                <boxGeometry args={[keyWidth * 0.6, 0.2, 0.45]} />
+                                <meshStandardMaterial color="#000000" roughness={0.5} />
+                            </mesh>
+                        );
+                    })}
+                </group>
             </group>
         </Float>
     );
@@ -276,7 +342,7 @@ export default function PersonalMotifs() {
       */}
             <group scale={0.8}>
                 <RealisticCamera position={[-3, 2, -1]} />
-                <MidiKeyboard position={[0, -2.5, 1]} />
+                <AkaiMPKMini position={[0.5, -2, 1]} />
                 <PS5Controller position={[3.5, 1.5, -2]} />
                 <PhotorealCodeBrackets position={[-4, -1, -3]} />
                 <DesignerPenVector position={[2, -1, 3]} />

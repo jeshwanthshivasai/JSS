@@ -13,11 +13,47 @@ import Magnetic from './Magnetic.tsx';
 <footer class="relative z-10 w-full max-w-7xl mx-auto px-4 py-32 mt-32 text-center flex flex-col items-center">
   <h2 class="text-3xl md:text-5xl font-serif text-primary mb-6">Let's build something.</h2>
   
-  {/* The Mini Sequencer Placeholder */}
-  <div class="flex gap-2 mb-16 opacity-70 hover:opacity-100 transition-opacity">
-    <button class="w-12 h-16 border border-secondary bg-background hover:bg-primary transition-colors hover:text-background rounded" aria-label="Play Note 1">C</button>
-    <button class="w-12 h-16 border border-secondary bg-background hover:bg-accent-teal transition-colors hover:text-background rounded" aria-label="Play Note 2">E</button>
-    <button class="w-12 h-16 border border-secondary bg-background hover:bg-accent-crimson transition-colors hover:text-background rounded" aria-label="Play Note 3">G</button>
+  {/* AKAI MINI 2D INTERFACE */}
+  <div class="flex flex-col gap-8 items-center mb-24 max-w-full">
+    {/* 8 MPC PADS (2x4 Grid) */}
+    <div class="grid grid-cols-4 gap-3">
+      {[...Array(8)].map((_, i) => (
+        <button 
+          id={`pad-${i}`}
+          class="w-14 h-14 bg-zinc-900 border-2 border-zinc-800 rounded-md hover:bg-red-950/30 hover:border-red-601/50 transition-all duration-75 active:scale-90 flex items-center justify-center group shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]"
+          aria-label={`MPC Pad ${i + 1}`}
+        >
+          <div class="w-2 h-2 bg-red-600 rounded-full opacity-20 shadow-[0_0_12px_rgba(220,38,38,0.4)] group-hover:opacity-100 transition-opacity"></div>
+        </button>
+      ))}
+    </div>
+
+    {/* 25 KEY PIANO ROLL */}
+    <div class="relative flex items-start overflow-x-auto pb-4 no-scrollbar max-w-full px-4 scroll-smooth">
+      <div class="relative flex bg-zinc-800 p-1 rounded-sm shadow-2xl">
+        {[...Array(15)].map((_, i) => (
+          <button
+            id={`key-w-${i}`}
+            class="min-w-[24px] h-20 bg-zinc-100 border-r border-zinc-300 rounded-b-[2px] hover:bg-white transition-colors active:h-[78px] active:bg-zinc-200"
+            aria-label={`White Key ${i + 1}`}
+          ></button>
+        ))}
+        {/* Black Keys Overlays */}
+        <div class="absolute top-1 left-1 w-full h-12 pointer-events-none flex">
+          {[...Array(14)].map((_, i) => {
+            const isBlack = [0, 1, 3, 4, 5].includes(i % 7);
+            return isBlack ? (
+              <button
+                id={`key-b-${i}`}
+                class="absolute w-[16px] h-12 bg-zinc-900 border-x border-b border-black rounded-b-[2px] z-10 pointer-events-auto hover:bg-black active:h-[46px] shadow-lg"
+                style={{ left: `${(i + 1) * 24 - 8}px` }}
+                aria-label={`Black Key ${i + 1}`}
+              ></button>
+            ) : null;
+          })}
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-12">
@@ -41,3 +77,46 @@ import Magnetic from './Magnetic.tsx';
     Designed and Engineered by Jeshwanth Shiva Sai © 2026
   </p>
 </footer>
+
+<script>
+  import { unlockAudio, playDrumPad, playMidiKey } from '../lib/audio';
+
+  const initAudio = () => {
+    // MPC Pads
+    [...Array(8)].forEach((_, i) => {
+      const pad = document.getElementById(`pad-${i}`);
+      if (pad) {
+        pad.addEventListener('mousedown', () => {
+          unlockAudio();
+          playDrumPad(i);
+        });
+      }
+    });
+
+    // White Keys
+    [...Array(15)].forEach((_, i) => {
+      const key = document.getElementById(`key-w-${i}`);
+      if (key) {
+        key.addEventListener('mousedown', () => {
+          unlockAudio();
+          playMidiKey(i);
+        });
+      }
+    });
+
+    // Black Keys
+    [...Array(14)].forEach((_, i) => {
+      const key = document.getElementById(`key-b-${i}`);
+      if (key) {
+        key.addEventListener('mousedown', () => {
+          unlockAudio();
+          playMidiKey(i + 15);
+        });
+      }
+    });
+  };
+
+  initAudio();
+  // Re-init on Astro page transitions if using View Transitions
+  document.addEventListener('astro:after-swap', initAudio);
+</script>
