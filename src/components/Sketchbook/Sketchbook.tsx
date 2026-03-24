@@ -43,19 +43,34 @@ export default function Sketchbook() {
                     <div className="w-full md:w-1/2">
                         <h4 className="text-4xl md:text-5xl font-black uppercase text-foreground">The Architect's Pivot</h4>
                         <p className="mt-4 text-foreground/80 font-bold text-lg md:text-xl leading-relaxed">
-                            I spent years designing physical structures. Now, I use those exact same principles—balance, flow, and extreme attention to detail—to build digital products. I still sketch everything by hand first.
+                            I'm an Architect by profession and a Designer at heart. Rooted in architecture and guided by curiosity about human behavior, I design digital experiences that balance structure with empathy.
+                        </p>
+                        <p className="mt-4 text-foreground/50 text-lg leading-relaxed">
+                            I’m driven by understanding how people think, feel, and interact - shaping products that feel clear, thoughtful, and quietly make life a little easier. ✨
                         </p>
                     </div>
                 </motion.div>
 
-                {/* Google Local Guide - Big Featured Block */}
-                <motion.div variants={itemVariants} className="w-full group" onMouseEnter={playSketchbookHover}>
-                    <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] p-10 md:p-14 hover:bg-[#111] transition-colors duration-500 h-full flex flex-col cursor-pointer shadow-2xl">
-                        <h4 className="text-4xl md:text-5xl font-black uppercase text-foreground">Level 7 Local Guide</h4>
-                        <p className="mt-4 text-foreground/80 font-bold text-lg max-w-2xl">Connecting local businesses and highlighting architectural nuances across India.</p>
-                        <div className="mt-10 w-full h-56 bg-[#1a1a1a] rounded-xl border border-white/5 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-700">
-                            <span className="font-bold uppercase tracking-widest text-foreground/30">Map Imagery Placeholder</span>
-                        </div>
+                {/* Experience Feed */}
+                <motion.div variants={itemVariants} className="w-full mt-12 bg-white/5 rounded-3xl p-10 md:p-14 border border-white/10">
+                    <h4 className="text-4xl md:text-5xl font-black uppercase text-foreground mb-12">The Journey</h4>
+                    <div className="space-y-12">
+                        {[
+                            { title: "Designer/Developer", company: "GenbaNEXT", year: "2025 - Present", desc: "Crafting enterprise-grade digital solutions where beliving in skill and determination matters most." },
+                            { title: "Freelancer Architect & Visual Storyteller", year: "2023 - 2024", desc: "Finding the nexus between architectural structure and visual documentary." },
+                            { title: "Junior Architect", year: "2021 - 2023", desc: "Bridging physical spaces with multiple firms across a diverse project spectrum." },
+                            { title: "Internship", company: "Liquid Space Studio", year: "2020 - 2021", desc: "Foundational exposure to experimental design thinking." }
+                        ].map((exp, i) => (
+                            <div key={i} className="relative pl-8 border-l-2 border-primary/20 hover:border-primary transition-colors duration-300">
+                                <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary rounded-full shadow-[0_0_15px_rgba(252,232,131,0.5)]" />
+                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                                    <h5 className="text-xl md:text-2xl font-black uppercase text-primary">{exp.title}</h5>
+                                    <span className="font-mono text-sm text-foreground/40">{exp.year}</span>
+                                </div>
+                                {exp.company && <p className="text-foreground/60 font-bold uppercase tracking-widest text-xs mb-2">{exp.company}</p>}
+                                <p className="text-foreground/50 leading-relaxed font-medium">{exp.desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </motion.div>
 

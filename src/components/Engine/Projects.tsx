@@ -4,23 +4,23 @@ import { playEngineHover, playClickSnap } from '../../lib/audio';
 
 const CATEGORIES = [
     "All",
-    "Immersive Web Experiences",
-    "Strategic SaaS Interfaces",
-    "Core Visual Identities",
-    "Editorial & Graphic Systems",
-    "Cinematic Product Narratives",
-    "AI-Augmented Workflows"
+    "SaaS App Design",
+    "Retail SaaS App Design",
+    "Branding & Website Design",
+    "Website & Banner Design",
+    "SaaS App Website Design",
+    "Poster Design",
+    "Feature Addition"
 ];
 
 const engineProjects = [
-    { id: 1, title: 'RetNEXT', role: 'Product & UX Designer', type: 'Strategic SaaS Interfaces', year: '2025', desc: 'Enterprise-grade retail operations engine with 10+ core high-fidelity workflows.' },
-    { id: 2, title: 'HOST', role: 'Interface Strategy', type: 'Strategic SaaS Interfaces', year: '2025', desc: 'Government-tier role-based dashboard system focused on complex data clarity.' },
-    { id: 3, title: 'GenbaAI', role: 'AI Integration Lead', type: 'AI-Augmented Workflows', year: '2025', desc: 'Seamlessly embedding LLM capabilities into legacy enterprise SaaS frameworks.' },
-    { id: 4, title: 'RefriGreen', role: 'Creative Director', type: 'Immersive Web Experiences', year: '2025', desc: 'Environmental initiative website backed by MoEFCC & MOE Japan.' },
-    { id: 5, title: 'FixAI', role: 'Founding Designer', type: 'Immersive Web Experiences', year: '2024', desc: 'Digital presence for a Harvard iLab incubated startup focused on early positioning.' },
-    { id: 6, title: 'Structural Logos', role: 'Visual Identity', type: 'Core Visual Identities', year: '2024', desc: 'A collection of mathematically grounded logos for tech and architecture firms.' },
-    { id: 7, title: 'Product Vision 26', role: 'Motion Designer', type: 'Cinematic Product Narratives', year: '2025', desc: 'High-fidelity product walkthroughs and simulations for investment pitching.' },
-    { id: 8, title: 'Editorial Systems', role: 'Graphic Designer', type: 'Editorial & Graphic Systems', year: '2023', desc: 'Systematic layout design and typography for modern digital publications.' },
+    { id: 'saas-dashboard', title: 'SaaS Dashboard', role: 'UI/UX Designer', type: 'SaaS App Design', year: '2025', desc: 'A mobile friendly and responsive SaaS Dashboard to conduct surveys and look quickly at the statistics collected from the surveys.' },
+    { id: 'retail-saas-app', title: 'Retail SaaS App', role: 'Product/IxD Designer', type: 'Retail SaaS App Design', year: '2025', desc: 'A mobile friendly and responsive SaaS App to track A->Z in a convenience stores in the USA.' },
+    { id: 'brand-identity', title: 'Brand Identity', role: 'Visual Strategist', type: 'Branding & Website Design', year: '2024', desc: 'Handcrafted Ikkath clothing brand project initiated by an IAS Officer to uplift HIV Positive Women.' },
+    { id: 'brand-collab', title: 'Collaborative Branding', role: 'Creative Director', type: 'Website & Banner Design', year: '2024', desc: 'Design for a project backed by the Govt. of India (MoEFCC) and the Govt. of Japan (MOE Japan).' },
+    { id: 'saas-app-website', title: 'SaaS Branding', role: 'SaaS Product Designer', type: 'SaaS App Website Design', year: '2024', desc: 'Mobile friendly website for a child SaaS application with premium interfaces and animations.' },
+    { id: 'poster-design', title: 'Poster Design', role: 'Graphic Designer', type: 'Poster Design', year: '2023', desc: 'A Poster designed for an IAS Officer for an event as LBSNAA.' },
+    { id: 'feature-addition', title: 'AI Integration', role: 'AI Integration Lead', type: 'Feature Addition', year: '2025', desc: 'Integrated in-house AI Chatbot to existing SaaS application screens.' },
 ];
 
 const containerVariants = {
@@ -103,15 +103,15 @@ export default function EngineProjects() {
                             }}
                         >
                             {/* The Minimalist Card */}
-                            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] w-full aspect-[16/9] md:aspect-[21/9] flex flex-col justify-end p-10 md:p-20 hover:bg-[#0f0f0f] transition-colors duration-500 shadow-2xl group">
+                            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 w-full aspect-[16/9] md:aspect-[21/9] flex flex-col justify-end p-10 md:p-20 hover:bg-zinc-900 transition-all duration-500 group">
 
                                 {/* Hover Glow */}
                                 <div className="absolute top-0 left-0 w-full h-full bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                                 {/* Clean Mockup Placeholder Graphic */}
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[80%] h-[120%] bg-[#1a1a1a] rounded-xl border border-white/5 transform rotate-1 group-hover:rotate-0 group-hover:-translate-y-[45%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center shadow-inner overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent" />
-                                    <span className="font-bold text-xs md:text-sm uppercase tracking-[0.3em] text-foreground/20 animate-pulse">Scanning Visual Asset...</span>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[80%] h-[120%] bg-white/2 rounded-xl border border-white/5 transform rotate-2 group-hover:rotate-0 group-hover:-translate-y-[45%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent" />
+                                    <span className="font-bold text-xs md:text-sm uppercase tracking-[0.3em] text-foreground/10 animate-pulse">Scanning Visual Asset...</span>
                                 </div>
 
                                 {/* Content Overlay */}
