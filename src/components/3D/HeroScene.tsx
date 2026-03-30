@@ -1,6 +1,4 @@
-import { Canvas } from '@react-three/fiber';
-import { Suspense, useEffect } from 'react';
-import PersonalMotifs from './PersonalMotifs';
+import { useEffect } from 'react';
 import { unlockAudio } from '../../lib/audio';
 
 export default function HeroScene() {
@@ -35,14 +33,6 @@ export default function HeroScene() {
                 </p>
             </div>
 
-            {/* The Interactive 3D Canvas */}
-            <div className="relative z-10 w-full h-full cursor-none">
-                <Canvas camera={{ position: [0, 0, 10], fov: 35 }}>
-                    <Suspense fallback={null}>
-                        <PersonalMotifs />
-                    </Suspense>
-                </Canvas>
-            </div>
 
             {/* Bottom Scroll Indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none">
