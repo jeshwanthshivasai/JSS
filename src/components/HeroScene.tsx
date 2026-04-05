@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { unlockAudio } from '../../lib/audio';
+import { unlockAudio } from '../lib/audio';
 
 export default function HeroScene() {
 
